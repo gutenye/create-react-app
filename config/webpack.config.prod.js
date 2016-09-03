@@ -17,6 +17,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var url = require('url');
 var paths = require('./paths');
 var env = require('./env');
+var pxtorem = require('postcss-pxtorem')
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -118,9 +119,11 @@ module.exports = {
         // Webpack 1.x uses Uglify plugin as a signal to minify *all* the assets
         // including CSS. This is confusing and will be removed in Webpack 2:
         // https://github.com/webpack/webpack/issues/283
-        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss')
+        loader: ExtractTextPlugin.extract('style', 'css?-autoprefixer!postcss?pack=default'),
+        exclude: /antd-mobile/,
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
+      { test: /\.css$/, include: /antd-mobile/, loader: ExtractTextPlugin.extract('style', 'css!postcss?pack=antd') }
       {
         test: /\.scss$/,
         include: [paths.appSrc, paths.appNodeModules],
@@ -181,16 +184,21 @@ module.exports = {
   },
   // We use PostCSS for autoprefixing only.
   postcss: function() {
-    return [
-      autoprefixer({
-        browsers: [
-          '>1%',
-          'last 4 versions',
-          'Firefox ESR',
-          'not ie < 9', // React doesn't support IE8 anyway
-        ]
-      }),
-    ];
+    return {
+      default: [
+        autoprefixer({
+          browsers: [
+            '>1%',
+            'last 4 versions',
+            'Firefox ESR',
+            'not ie < 9', // React doesn't support IE8 anyway
+          ]
+        }),
+      ],
+      antd: [
+        pxtorem({rootValue: 32, propWhiteList: []}),
+      ]
+    };
   },
   plugins: [
     // Generates an `index.html` file with the <script> injected.
