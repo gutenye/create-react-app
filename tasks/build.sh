@@ -26,7 +26,6 @@ if [ $(npm -v | head -c 1) -lt 3 ]; then
   exit 1;
 fi;
 
-rm -rf dist
 # Create a temporary clean folder that contains production only code.
 # Do not overwrite any files in the current folder.
 clean_path='dist'

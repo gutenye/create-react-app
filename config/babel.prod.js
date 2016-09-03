@@ -21,6 +21,9 @@ module.exports = {
     require.resolve('babel-preset-react')
   ],
   plugins: [
+    require.resolve("babel-plugin-transform-export-extensions"),
+    require.resolve("babel-plugin-transform-decorators-legacy"),
+    [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],
     require.resolve('babel-plugin-syntax-async-functions'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
@@ -46,7 +49,5 @@ module.exports = {
     // * https://phabricator.babeljs.io/search/query/pCNlnC2xzwzx/
     // TODO: Enable again when these issues are resolved.
     // require.resolve('babel-plugin-transform-react-constant-elements')
-    [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],
-    require.resolve("babel-plugin-transform-decorators-legacy"),
   ],
 };
