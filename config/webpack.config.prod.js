@@ -123,7 +123,7 @@ module.exports = {
         exclude: /antd-mobile/,
         // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
       },
-      { test: /\.css$/, include: /antd-mobile/, loader: ExtractTextPlugin.extract('style', 'css!postcss?pack=antd') }
+      { test: /\.css$/, include: /antd-mobile/, loader: ExtractTextPlugin.extract('style', 'css!postcss?pack=antd') },
       {
         test: /\.scss$/,
         include: [paths.appSrc, paths.appNodeModules],
