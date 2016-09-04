@@ -63,8 +63,17 @@ module.exports = {
     publicPath: publicPath
   },
   resolve: {
+    // This allows you to set a fallback for where Webpack should look for modules.
+    // We read `NODE_PATH` environment variable in `paths.js` and pass paths here.
+    // We use `fallback` instead of `root` because we want `node_modules` to "win"
+    // if there any conflicts. This matches Node resolution mechanism.
+    // https://github.com/facebookincubator/create-react-app/issues/253
+    fallback: paths.nodePaths,
     // These are the reasonable defaults supported by the Node ecosystem.
-    extensions: ['.web.js', '.js', '.json', ''],
+    // We also include JSX as a common component filename extension to support
+    // some tools, although we do not recommend using it, see:
+    // https://github.com/facebookincubator/create-react-app/issues/290
+    extensions: ['.web.js', '.js', '.json', '.jsx', ''],
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -84,7 +93,7 @@ module.exports = {
     // It's important to do this before Babel processes the JS.
     preLoaders: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         loader: 'eslint',
         include: paths.appSrc
       }
@@ -92,7 +101,7 @@ module.exports = {
     loaders: [
       // Process JS with Babel.
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
         include: paths.appSrc,
         loader: 'babel',
         query: require('./babel.prod')
