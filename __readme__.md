@@ -42,3 +42,16 @@ plugins: [
   [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],  // antd-mobile support
 ]
 ```
+
+scripts/start.js
+
+```
+var proxy2 = require(paths.appPackageJson).proxy2;
+var devServer = new WebpackDevServer(compiler, {
+  proxy: {
+    [proxy2.path]: Object.assign({
+      ws: true,
+    }, proxy2)
+  }
+})
+```

@@ -24,7 +24,6 @@ module.exports = {
     require.resolve("babel-plugin-transform-export-extensions"),
     require.resolve("babel-plugin-transform-decorators-legacy"),
     [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],
-    require.resolve('babel-plugin-syntax-async-functions'),
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }
