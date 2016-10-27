@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import logo from './logo.svg'
+import './App.scss'
 
-class App extends Component {
+function configure(WrappedComponent) {
+  return class extends React.Component {
+    const {props} = this
+    return <WrappedComponent ...props />
+  }
+}
+
+@configure
+export default class App extends React.Component {
   render() {
     return (
       <div className="App">
@@ -14,8 +22,6 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
       </div>
-    );
+    )
   }
 }
-
-export default App;
