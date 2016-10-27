@@ -128,7 +128,7 @@ module.exports = {
           plugins: [
             require.resolve("babel-plugin-transform-decorators-legacy"),
             require.resolve("babel-plugin-transform-export-extensions"),
-            [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],
+            [require.resolve('babel-plugin-import'), {style: 'css', libraryName: 'antd-mobile'}],
           ],
           // @remove-on-eject-end
           // This is a feature of `babel-loader` for webpack (not Babel itself).
