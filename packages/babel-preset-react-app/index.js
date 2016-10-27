@@ -11,9 +11,6 @@
 var path = require('path');
 
 const plugins = [
-    require.resolve("babel-plugin-transform-export-extensions"),
-    require.resolve("babel-plugin-transform-decorators-legacy"),
-    [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],
     // class { handleClick = () => { } }
     require.resolve('babel-plugin-transform-class-properties'),
     // { ...todo, completed: true }

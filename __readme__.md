@@ -1,3 +1,14 @@
+Publish
+
+```
+cd packages/react-scripts
+$ npm publish --access public
+
+cd packages/eslint-config-react-app
+$ npm publish --access public
+$ npm install -g @gutenye/eslint-config-react-app
+```
+
 ### packages/create-react-app
 
 config/webpack.config.dev.js
@@ -89,24 +100,4 @@ rules: {
   'no-throw-literal': 'off',
   'react/no-direct-mutation-state': 'off',
 }
-```
-
-### packages/babel-preset-react-app
-
-index.js
-
-```
-plugins: [
-  require.resolve("babel-plugin-transform-decorators-legacy"),
-  require.resolve("babel-plugin-transform-export-extensions"),
-  [require.resolve('babel-plugin-antd'), {style: 'css', libraryName: 'antd-mobile'}],  // antd-mobile support
-]
-```
-
-package.json
-
-```
-  "dependencies": {
-    ...
-  }
 ```
