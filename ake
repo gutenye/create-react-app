@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+export PATH="node_modules/.bin:$PATH"
+
+bootstrap() {
+  lerna bootstrap
+}
+
+publish() {
+  ./tasks/build.sh
+  cd dist
+  git add .
+  git commit -m 'update'
+  git push
+}
+
+case "$1" in
+  p | publish ) publish ;;
+  bootstrap ) bootstrap ;;
+esac

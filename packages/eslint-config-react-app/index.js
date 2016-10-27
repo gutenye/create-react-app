@@ -54,8 +54,10 @@ module.exports = {
     }
   },
 
+  globals: {pd: true, $: true, $$: true, __DEV__: true},
   rules: {
     // http://eslint.org/docs/rules/
+    'no-return-assign': 'off',
     'array-callback-return': 'warn',
     'default-case': ['warn', { commentPattern: '^no default$' }],
     'dot-location': ['warn', 'property'],
@@ -107,7 +109,7 @@ module.exports = {
     'no-obj-calls': 'warn',
     'no-octal': 'warn',
     'no-octal-escape': 'warn',
-    'no-redeclare': 'warn',
+    'no-redeclare': 'off',
     'no-regex-spaces': 'warn',
     'no-restricted-syntax': [
       'warn',
@@ -122,7 +124,7 @@ module.exports = {
     'no-sparse-arrays': 'warn',
     'no-template-curly-in-string': 'warn',
     'no-this-before-super': 'warn',
-    'no-throw-literal': 'warn',
+    'no-throw-literal': 'off',
     'no-undef': 'error',
     'no-unexpected-multiline': 'warn',
     'no-unreachable': 'warn',
@@ -148,7 +150,7 @@ module.exports = {
     }],
     'no-with': 'warn',
     'no-whitespace-before-property': 'warn',
-    'operator-assignment': ['warn', 'always'],
+    'operator-assignment': ['off', 'always'],
     radix: 'warn',
     'require-yield': 'warn',
     'rest-spread-spacing': ['warn', 'never'],
@@ -199,7 +201,7 @@ module.exports = {
     'react/jsx-uses-vars': 'warn',
     'react/no-danger-with-children': 'warn',
     'react/no-deprecated': 'warn',
-    'react/no-direct-mutation-state': 'warn',
+    'react/no-direct-mutation-state': 'off',
     'react/no-is-mounted': 'warn',
     'react/react-in-jsx-scope': 'error',
     'react/require-render-return': 'warn',
