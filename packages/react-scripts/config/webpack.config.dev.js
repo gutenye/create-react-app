@@ -18,7 +18,6 @@ var InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 var WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 var getClientEnvironment = require('./env');
 var paths = require('./paths');
-console.log('paths', paths)
 var pxtorem = require('postcss-pxtorem');
 
 // Webpack uses `publicPath` to determine where the app is being served from.

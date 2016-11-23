@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-publish() {
-  npm run publish
-}
-
-case "$1" in
-  publish ) publish ;;
-esac
