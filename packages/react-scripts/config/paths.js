@@ -35,7 +35,6 @@ var nodePaths = (process.env.NODE_PATH || '')
   .filter(Boolean)
   .map(resolveApp);
 
-const rcPaths = require(resolveApp('package.json')).paths || {}
 
 // config after eject: we're in ./config/
 module.exports = {
@@ -56,6 +55,8 @@ module.exports = {
 function resolveOwn(relativePath) {
   return path.resolve(__dirname, relativePath);
 }
+
+const rcPaths = require(resolveApp('package.json')).paths || {}
 
 // config before eject: we're in ./node_modules/react-scripts/config/
 module.exports = {
