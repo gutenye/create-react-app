@@ -35,6 +35,8 @@ var nodePaths = (process.env.NODE_PATH || '')
   .filter(Boolean)
   .map(resolveApp);
 
+const rcPaths = require(resolveApp('package.json')).paths || {}
+
 // config after eject: we're in ./config/
 module.exports = {
   appBuild: resolveApp('build'),
@@ -59,8 +61,8 @@ function resolveOwn(relativePath) {
 module.exports = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
-  appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appHtml: resolveApp(rcPaths.appHtml || 'public/index.html'),
+  appIndexJs: resolveApp(rcPaths.appIndexJs || 'src/index.js'),
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
