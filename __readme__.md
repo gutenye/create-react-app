@@ -4,9 +4,9 @@ Publish
 
 ```
 cd packages/react-scripts
-$ npm publish --access public
+$ npm publish
 
 cd packages/eslint-config-react-app
-$ npm publish --access public
+$ npm publish
 $ npm install -g @gutenye/eslint-config-react-app
 ```
