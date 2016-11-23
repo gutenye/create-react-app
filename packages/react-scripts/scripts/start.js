@@ -26,10 +26,15 @@ var detect = require('detect-port');
 var clearConsole = require('react-dev-utils/clearConsole');
 var checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+var getProcessForPort = require('react-dev-utils/getProcessForPort');
 var openBrowser = require('react-dev-utils/openBrowser');
 var prompt = require('react-dev-utils/prompt');
+var pathExists = require('path-exists');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+
+var useYarn = pathExists.sync(paths.yarnLockFile);
+var cli = useYarn ? 'yarn' : 'npm';
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -85,7 +90,7 @@ function setupCompiler(host, port, protocol) {
       console.log('  ' + chalk.cyan(protocol + '://' + host + ':' + port + '/'));
       console.log();
       console.log('Note that the development build is not optimized.');
-      console.log('To create a production build, use ' + chalk.cyan('npm run build') + '.');
+      console.log('To create a production build, use ' + chalk.cyan(cli + ' run build') + '.');
       console.log();
     }
 
@@ -197,6 +202,8 @@ function addMiddleware(devServer) {
 function runDevServer(host, port, protocol) {
   var proxy2 = require(paths.appPackageJson).proxy2 || {path: '/non-exists-123', target: 'http://localhost:65535'};
   var devServer = new WebpackDevServer(compiler, {
+    // Enable gzip compression of generated files.
+    compress: true,
     // Silence WebpackDevServer's own logs since they're generally not useful.
     // It will still show compile warnings and errors with this setting.
     clientLogLevel: 'none',
@@ -274,9 +281,11 @@ detect(DEFAULT_PORT).then(port => {
   }
 
   clearConsole();
+  var existingProcess = getProcessForPort(DEFAULT_PORT);
   var question =
-    chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.') +
-    '\n\nWould you like to run the app on another port instead?';
+    chalk.yellow('Something is already running on port ' + DEFAULT_PORT + '.' +
+      ((existingProcess) ? ' Probably:\n  ' + existingProcess : '')) +
+      '\n\nWould you like to run the app on another port instead?';
 
   prompt(question, true).then(shouldChangePort => {
     if (shouldChangePort) {

@@ -8,10 +8,11 @@
  */
 
 var createJestConfig = require('../utils/createJestConfig');
-var fs = require('fs');
+var fs = require('fs-extra');
 var path = require('path');
+var pathExists = require('path-exists');
+var paths = require('../config/paths');
 var prompt = require('react-dev-utils/prompt');
-var rimrafSync = require('rimraf').sync;
 var spawnSync = require('cross-spawn').sync;
 var chalk = require('chalk');
 var green = chalk.green;
@@ -30,6 +31,25 @@ prompt(
 
   var ownPath = path.join(__dirname, '..');
   var appPath = path.join(ownPath, '..', '..');
+
+  function verifyAbsent(file) {
+    if (fs.existsSync(path.join(appPath, file))) {
+      console.error(
+        '`' + file + '` already exists in your app folder. We cannot ' +
+        'continue as you would lose all the changes in that file or directory. ' +
+        'Please move or delete it (maybe make a copy for backup) and run this ' +
+        'command again.'
+      );
+      process.exit(1);
+    }
+  }
+
+  var folders = [
+    'config',
+    path.join('config', 'jest'),
+    'scripts'
+  ];
+
   var files = [
     path.join('config', 'env.js'),
     path.join('config', 'paths.js'),
@@ -44,22 +64,13 @@ prompt(
   ];
 
   // Ensure that the app folder is clean and we won't override any files
-  files.forEach(function(file) {
-    if (fs.existsSync(path.join(appPath, file))) {
-      console.error(
-        '`' + file + '` already exists in your app folder. We cannot ' +
-        'continue as you would lose all the changes in that file or directory. ' +
-        'Please delete it (maybe make a copy for backup) and run this ' +
-        'command again.'
-      );
-      process.exit(1);
-    }
-  });
+  folders.forEach(verifyAbsent);
+  files.forEach(verifyAbsent);
 
   // Copy the files over
-  fs.mkdirSync(path.join(appPath, 'config'));
-  fs.mkdirSync(path.join(appPath, 'config', 'jest'));
-  fs.mkdirSync(path.join(appPath, 'scripts'));
+  folders.forEach(function(folder) {
+    fs.mkdirSync(path.join(appPath, folder))
+  });
 
   console.log();
   console.log(cyan('Copying files into ' + appPath));
@@ -133,9 +144,15 @@ prompt(
   );
   console.log();
 
-  console.log(cyan('Running npm install...'));
-  rimrafSync(ownPath);
-  spawnSync('npm', ['install'], {stdio: 'inherit'});
+  if (pathExists.sync(paths.yarnLockFile)) {
+    console.log(cyan('Running yarn...'));
+    fs.removeSync(ownPath);
+    spawnSync('yarn', [], {stdio: 'inherit'});
+  } else {
+    console.log(cyan('Running npm install...'));
+    fs.removeSync(ownPath);
+    spawnSync('npm', ['install'], {stdio: 'inherit'});
+  }
   console.log(green('Ejected successfully!'));
   console.log();
 

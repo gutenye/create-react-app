@@ -18,9 +18,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   const setupTestsFile = pathExists.sync(paths.testsSetup) ? '<rootDir>/src/setupTests.js' : undefined;
 
   const config = {
-    moduleFileExtensions: ['jsx', 'js', 'json'],
+    collectCoverageFrom: ['src/**/*.{js,jsx}'],
     moduleNameMapper: {
-      '^.+\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': resolve('config/jest/FileStub.js'),
+      '^.+\\.(?!(js|jsx|css|json)$)[^\\.]+$': resolve('config/jest/FileStub.js'),
       '^.+\\.css$': resolve('config/jest/CSSStub.js')
     },
     setupFiles: [resolve('config/polyfills.js')],
@@ -34,7 +34,9 @@ module.exports = (resolve, rootDir, isEjecting) => {
   if (!isEjecting) {
     // This is unnecessary after ejecting because Jest
     // will just use .babelrc in the project folder.
-    config.scriptPreprocessor = resolve('config/jest/transform.js');
+    config.transform = {
+      '^.+\\.(js|jsx)$': resolve('config/jest/transform.js'),
+    };
   }
   return config;
 };
