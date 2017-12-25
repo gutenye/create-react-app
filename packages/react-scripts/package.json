@@ -1,6 +1,6 @@
 {
-  "name": "react-scripts",
-  "version": "1.0.17",
+  "name": "@gutenye/react-scripts",
+  "version": "1.0.179",
   "description": "Configuration and scripts for Create React App.",
   "repository": "facebookincubator/create-react-app",
   "license": "MIT",
@@ -21,6 +21,18 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
+    "@gutenye/react-svg-loader": "^2.0.4",
+    "babel-plugin-import": "^1.1.1",
+    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-styled-components": "^1.1.4",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-imports": "^1.3.0",
+    "compression-webpack-plugin": "^0.4.0",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "transform-imports-react-icons": "^1.0.0",
+    "node-mocks": "^1.0.1",
+
     "autoprefixer": "7.1.6",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
